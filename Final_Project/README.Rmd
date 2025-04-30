@@ -1,0 +1,135 @@
+---
+title: "README"
+output: html_document
+date: "2025-04-30"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r, include=FALSE}
+#Load the dataset
+baseball_data <- read.csv('baseball_1985_2016.csv')
+
+#Load necessary packages 
+library(knitr)
+library(ggplot2)
+library(dplyr)
+library(corrplot)
+library(tidyr)
+library(ggpubr)
+library(stats)
+library(car)
+library(kableExtra)
+```
+
+## Data Organization
+```{r, include=FALSE}
+#Keeping only selected variables to evaluate
+filtered_data <- baseball_data %>%
+  select(playerid, yearid, hits_p, salary)  
+
+#Log salary to scale the data
+filtered_data$log_Salary <- log(filtered_data$salary)
+
+#Replace original salary data with logged salary
+filtered_data <- filtered_data %>%
+  filter(salary > 0) %>%
+  mutate(salary = log(salary))
+
+#Delete duplicate row of logged salary
+filtered_data <- filtered_data[, -4]
+
+```
+
+
+After filtering the data by removing the irrelevant attributes to our analysis, these are the attributes included in our data, as well as their data type:
+
+```{r, include=FALSE}
+colnames(filtered_data) <- c("Player_ID", "Year_ID", "Hits", "Logged_Salary")
+
+#Feature info table
+feature_info <- data.frame(
+  Feature = colnames(filtered_data),
+  Description = c("Player ID", "Year ID", "Number of hits per season", "Yearly salary in dollars, logged" 
+  ),
+  Scale_Type = c("Character", "Ordinal", "Interval", "Interval"
+  )
+)
+```
+
+
+### Feature Descriptions for Baseball Data
+
+```{r, echo=FALSE}
+# Display the table nicely
+kable(feature_info)
+```
+
+Some of the players in the dataset were pitchers and not hitters, so we had to remove rows with NA values for hits in order to only look at the hitters. 
+
+```{r, echo=FALSE}
+# Remove any NA or NaN value
+filtered_data <- filtered_data[!is.na(filtered_data$Hits), ]
+
+# Function to summarize data with key statistics, excluding Player_ID from summary only
+get_summary_stats <- function(data) {
+  data %>%
+    select(where(is.numeric), -Year_ID) %>%  # keep only numeric vars, EXCEPT Year_ID
+    summarise(across(
+      everything(),
+      list(
+        Count = ~sum(!is.na(.)),
+        Mean = ~mean(., na.rm = TRUE),
+        Median = ~median(., na.rm = TRUE),
+        SD = ~sd(., na.rm = TRUE),
+        Min = ~min(., na.rm = TRUE),
+        Max = ~max(., na.rm = TRUE)
+      ),
+      .names = "{.col}_{.fn}"
+    )) %>%
+    pivot_longer(everything(),
+                 names_to = c("Variable", "Statistic"),
+                 names_sep = "_",
+                 values_to = "Value") %>%
+    pivot_wider(names_from = Statistic, values_from = Value)
+}
+
+# Summary Table
+summary_baseball <- get_summary_stats(filtered_data)
+
+kable(summary_baseball, caption = "Detailed Summary Statistics") %>%
+  kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
+
+```
+## Exploratory Data Analysis
+```{r, echo=FALSE}
+# Histogram for Hits
+ggplot(filtered_data, aes(x = Hits)) +
+  geom_histogram(binwidth = 10, fill = "skyblue", color = "black", alpha = 0.7) +
+  labs(title = "Distribution of Hits", x = "Hits", y = "Frequency") +
+  theme_minimal()
+
+# Histogram for log_Salary
+ggplot(filtered_data, aes(x = Logged_Salary)) +
+  geom_histogram(binwidth = 0.1, fill = "lightgreen", color = "black", alpha = 0.7) +
+  labs(title = "Distribution of Logged Salary", x = "Log Salary", y = "Frequency") +
+  theme_minimal()
+
+
+# Density plot for Hits
+ggplot(filtered_data, aes(x = Hits)) +
+  geom_density(fill = "skyblue", color = "black", alpha = 0.7) +
+  labs(title = "Density of Hits", x = "Hits", y = "Density") +
+  theme_minimal()
+
+# Density plot for log_Salary
+ggplot(filtered_data, aes(x = Logged_Salary)) +
+  geom_density(fill = "lightgreen", color = "black", alpha = 0.7) +
+  labs(title = "Density of Logged Salary", x = "Log Salary", y = "Density") +
+  theme_minimal()
+```
+###
+
+
