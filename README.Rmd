@@ -1,7 +1,9 @@
 ---
 title: "README"
-output: html_document
-date: "2025-04-30"
+output:
+ github_document:
+ pandoc_args: ["--wrap=none"]
+always_allow_html: true
 ---
 
 ```{r setup, include=FALSE}
@@ -10,7 +12,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ```{r, include=FALSE}
 #Load the dataset
-baseball_data <- read.csv('baseball_1985_2016.csv')
+baseball_data <- read.csv('./Data/baseball_1985_2016.csv')
 
 #Load necessary packages 
 library(knitr)
@@ -22,39 +24,40 @@ library(ggpubr)
 library(stats)
 library(car)
 library(kableExtra)
+#install.packages("ggcorrplot")  # if not already installed
+library(ggcorrplot)
 ```
 
 ## Data Organization
 ```{r, include=FALSE}
 #Keeping only selected variables to evaluate
-filtered_data <- baseball_data %>%
-  select(playerid, yearid, hits_p, salary)  
+hitters_data <- baseball_data %>%
+  select(playerid, yearid, hits_p, game_p, stint, atbat_b, hr_b, rbi_b, salary, birthyear)  
 
 #Log salary to scale the data
-filtered_data$log_Salary <- log(filtered_data$salary)
+hitters_data$log_Salary <- log(hitters_data$salary)
 
 #Replace original salary data with logged salary
-filtered_data <- filtered_data %>%
+hitters_data <- hitters_data %>%
   filter(salary > 0) %>%
   mutate(salary = log(salary))
 
 #Delete duplicate row of logged salary
-filtered_data <- filtered_data[, -4]
-
+hitters_data <- hitters_data[, -9]
 ```
 
 
 After filtering the data by removing the irrelevant attributes to our analysis, these are the attributes included in our data, as well as their data type:
 
 ```{r, include=FALSE}
-colnames(filtered_data) <- c("Player_ID", "Year_ID", "Hits", "Logged_Salary")
+colnames(hitters_data) <- c("Player_ID", "Year_ID", "Hits", "Games Played", "Stint", "At Bat", "Homeruns", "RBI", "Birth Year", "Logged_Salary")
 
-#Feature info table
+#Feature info table 
 feature_info <- data.frame(
-  Feature = colnames(filtered_data),
-  Description = c("Player ID", "Year ID", "Number of hits per season", "Yearly salary in dollars, logged" 
+  Feature = colnames(hitters_data),
+  Description = c("Player ID", "Year ID", "Number of hits per season", "Games played per season","How many years player has been on team", "Number of times at bat per season", "Home runs per season","Runs Batted In per season", "Birth Year", "Yearly salary in dollars, logged" 
   ),
-  Scale_Type = c("Character", "Ordinal", "Interval", "Interval"
+  Scale_Type = c("Character", "Ordinal", "Interval", "Interval", "Interval", "Interval", "Interval", "Interval", "Interval", "Ratio"
   )
 )
 ```
@@ -71,7 +74,7 @@ Some of the players in the dataset were pitchers and not hitters, so we had to r
 
 ```{r, echo=FALSE}
 # Remove any NA or NaN value
-filtered_data <- filtered_data[!is.na(filtered_data$Hits), ]
+hitters_data <- hitters_data[!is.na(hitters_data$Hits), ]
 
 # Function to summarize data with key statistics, excluding Player_ID from summary only
 get_summary_stats <- function(data) {
@@ -89,47 +92,75 @@ get_summary_stats <- function(data) {
       ),
       .names = "{.col}_{.fn}"
     )) %>%
-    pivot_longer(everything(),
-                 names_to = c("Variable", "Statistic"),
-                 names_sep = "_",
-                 values_to = "Value") %>%
+    pivot_longer(
+      cols = everything(),
+      names_to = c("Variable", "Statistic"),
+      names_pattern = "^(.*)_(Count|Mean|Median|SD|Min|Max)$",
+      values_to = "Value"
+    ) %>%
     pivot_wider(names_from = Statistic, values_from = Value)
 }
 
 # Summary Table
-summary_baseball <- get_summary_stats(filtered_data)
+summary_baseball <- get_summary_stats(hitters_data)
 
 kable(summary_baseball, caption = "Detailed Summary Statistics") %>%
   kable_styling(bootstrap_options = c("striped", "hover"), full_width = FALSE)
 
 ```
 ## Exploratory Data Analysis
+
+### Distribution of Variables 
+
 ```{r, echo=FALSE}
 # Histogram for Hits
-ggplot(filtered_data, aes(x = Hits)) +
+ggplot(hitters_data, aes(x = Hits)) +
   geom_histogram(binwidth = 10, fill = "skyblue", color = "black", alpha = 0.7) +
   labs(title = "Distribution of Hits", x = "Hits", y = "Frequency") +
   theme_minimal()
 
 # Histogram for log_Salary
-ggplot(filtered_data, aes(x = Logged_Salary)) +
+ggplot(hitters_data, aes(x = Logged_Salary)) +
   geom_histogram(binwidth = 0.1, fill = "lightgreen", color = "black", alpha = 0.7) +
   labs(title = "Distribution of Logged Salary", x = "Log Salary", y = "Frequency") +
   theme_minimal()
 
 
 # Density plot for Hits
-ggplot(filtered_data, aes(x = Hits)) +
+ggplot(hitters_data, aes(x = Hits)) +
   geom_density(fill = "skyblue", color = "black", alpha = 0.7) +
   labs(title = "Density of Hits", x = "Hits", y = "Density") +
   theme_minimal()
 
 # Density plot for log_Salary
-ggplot(filtered_data, aes(x = Logged_Salary)) +
+ggplot(hitters_data, aes(x = Logged_Salary)) +
   geom_density(fill = "lightgreen", color = "black", alpha = 0.7) +
   labs(title = "Density of Logged Salary", x = "Log Salary", y = "Density") +
   theme_minimal()
 ```
-###
+Both variables are not normally distributed, so we cannot run tests that assume normality, such as the Shapiro-Wilk test or Q-Q plots.
+Instead, we would use the Pearson Correlation test.
+
+### Pearson Correlation heatmap
+
+```{r, echo=FALSE}
+#Compute Pearson correlation
+numeric_filtered_data <- hitters_data[sapply(hitters_data, is.numeric)]
+cor_matrix <- cor(numeric_filtered_data, method = "pearson")
+
+
+
+ggcorrplot(cor_matrix, lab = TRUE, type = "lower", title = "Pearson Correlation Heatmap")
+
+```
+### Scatterplots 
+
+### Assumption tests
+
+## Conclusions 
+
+## Main Observations 
+
+## Future Directions
 
 
