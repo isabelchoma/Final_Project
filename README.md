@@ -248,14 +248,16 @@ Logged_Salary
 ### Distribution of Variables
 
 ![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-6-2.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-6-3.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-6-4.png)<!-- -->
+
 Both variables are not normally distributed, so we cannot run tests that
 assume normality, such as the Shapiro-Wilk test or Q-Q plots. Instead,
 we would use the Pearson Correlation test.
 
 ### Pearson Correlation heatmap
 
-![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- --> \###
-Scatterplots
+![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+
+### Scatterplots
 
 ### Assumption tests
 

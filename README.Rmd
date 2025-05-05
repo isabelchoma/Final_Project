@@ -138,6 +138,7 @@ ggplot(hitters_data, aes(x = Logged_Salary)) +
   labs(title = "Density of Logged Salary", x = "Log Salary", y = "Density") +
   theme_minimal()
 ```
+
 Both variables are not normally distributed, so we cannot run tests that assume normality, such as the Shapiro-Wilk test or Q-Q plots.
 Instead, we would use the Pearson Correlation test.
 
@@ -153,6 +154,7 @@ cor_matrix <- cor(numeric_filtered_data, method = "pearson")
 ggcorrplot(cor_matrix, lab = TRUE, type = "lower", title = "Pearson Correlation Heatmap")
 
 ```
+
 ### Scatterplots 
 
 ### Assumption tests
