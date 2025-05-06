@@ -282,21 +282,33 @@ ggplot(hitters_data, aes(x = Hits, y = Logged_Salary)) +
   geom_smooth(method = "lm", se = TRUE, color = "blue") +
   labs(title = "Hits vs Logged Salary", x = "Hits", y = "Log(Salary)") +
   theme_minimal()
+```
 
+The scatterplot shows a positive relationship between Hits and Logged Salary, meaning that players with more hits tend to have higher logged salaries. While the correlation is evident, the scatter of the data points suggests that Hits is only one of several factors affecting salary.
+
+```{r, echo=FALSE}
 # Scatterplot: Hits vs Games Played
 ggplot(hitters_data, aes(x = `Games Played`, y = Logged_Salary)) +
   geom_point(alpha = 0.6) +
   geom_smooth(method = "lm", se = TRUE, color = "blue") +
   labs(title = "Games Played vs Logged Salary", x = "Games Played", y = "Log(Salary)") +
   theme_minimal()
+```
 
+The scatterplot shows a slight positive correlation between Games Played and Logged Salary, with higher numbers of games played tending to correspond to slightly higher salaries. However, the relationship is weak, and the data points are dispersed, indicating that Games Played is not a strong predictor of Logged Salary in this model.
+
+```{r, echo=FALSE}
 # Scatterplot: Hits vs Stint
 ggplot(hitters_data, aes(x = Stint, y = Logged_Salary)) +
   geom_point(alpha = 0.6) +
   geom_smooth(method = "lm", se = TRUE, color = "blue") +
   labs(title = "Stint vs Logged Salary", x = "Stint", y = "Log(Salary)") +
   theme_minimal()
+```
 
+The scatterplot indicates a negative relationship between the number of years played with the team (stint) and Logged Salary, meaning that as the number of years played with a specific team increases, the logged salary tends to decrease slightly. However, most data points are concentrated at Stint = 1, and only a small number of players have higher stint values. The relationship appears weak, and the trend is primarily driven by the concentration of players at the lower end of the Stint variable.
+
+```{r, echo=FALSE}
 # Scatterplot: Hits vs Birth Year
 ggplot(hitters_data, aes(x = `Birth Year`, y = Logged_Salary)) +
   geom_point(alpha = 0.6) +
@@ -306,7 +318,7 @@ ggplot(hitters_data, aes(x = `Birth Year`, y = Logged_Salary)) +
 
 ```
 
-
+The scatterplot indicates a positive relationship between Birth Year and Logged Salary, where players born in later years tend to have higher salaries. The data points are closely aligned with the regression line, suggesting a stronger and more consistent relationship between these two variables compared to other variables like Hits or Games Played.
 
 ## Conclusions 
 

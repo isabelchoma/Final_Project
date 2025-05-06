@@ -469,17 +469,44 @@ met.
 
 ![](README_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
 
-    ## `geom_smooth()` using formula = 'y ~ x'
-
-![](README_files/figure-gfm/unnamed-chunk-13-2.png)<!-- -->
-
-    ## `geom_smooth()` using formula = 'y ~ x'
-
-![](README_files/figure-gfm/unnamed-chunk-13-3.png)<!-- -->
+The scatterplot shows a positive relationship between Hits and Logged
+Salary, meaning that players with more hits tend to have higher logged
+salaries. While the correlation is evident, the scatter of the data
+points suggests that Hits is only one of several factors affecting
+salary.
 
     ## `geom_smooth()` using formula = 'y ~ x'
 
-![](README_files/figure-gfm/unnamed-chunk-13-4.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+
+The scatterplot shows a slight positive correlation between Games Played
+and Logged Salary, with higher numbers of games played tending to
+correspond to slightly higher salaries. However, the relationship is
+weak, and the data points are dispersed, indicating that Games Played is
+not a strong predictor of Logged Salary in this model.
+
+    ## `geom_smooth()` using formula = 'y ~ x'
+
+![](README_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+
+The scatterplot indicates a negative relationship between the number of
+years played with the team (stint) and Logged Salary, meaning that as
+the number of years played with a specific team increases, the logged
+salary tends to decrease slightly. However, most data points are
+concentrated at Stint = 1, and only a small number of players have
+higher stint values. The relationship appears weak, and the trend is
+primarily driven by the concentration of players at the lower end of the
+Stint variable.
+
+    ## `geom_smooth()` using formula = 'y ~ x'
+
+![](README_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
+
+The scatterplot indicates a positive relationship between Birth Year and
+Logged Salary, where players born in later years tend to have higher
+salaries. The data points are closely aligned with the regression line,
+suggesting a stronger and more consistent relationship between these two
+variables compared to other variables like Hits or Games Played.
 
 ## Conclusions
 
