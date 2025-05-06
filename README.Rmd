@@ -137,10 +137,10 @@ ggplot(hitters_data, aes(x = Hits)) +
   labs(title = "Distribution of Hits", x = "Hits", y = "Frequency") +
   theme_minimal()
 
-# Histogram for log_Salary
-ggplot(hitters_data, aes(x = Logged_Salary)) +
-  geom_histogram(binwidth = 0.1, fill = "lightgreen", color = "black", alpha = 0.7) +
-  labs(title = "Distribution of Logged Salary", x = "Log Salary", y = "Frequency") +
+# Density plot for Hits
+ggplot(hitters_data, aes(x = Hits)) +
+  geom_density(fill = "skyblue", color = "black", alpha = 0.7) +
+  labs(title = "Density of Hits", x = "Hits", y = "Density") +
   theme_minimal()
 
 # Histogram for Birth Year 
@@ -149,34 +149,34 @@ ggplot(hitters_data, aes(x = `Birth Year`)) +
   labs(title = "Distribution of Birth Year", x = "Birth Year", y = "Frequency") +
   theme_minimal()
 
-# Histogram for At Bat
-ggplot(hitters_data, aes(x = `At Bat`)) +
-  geom_histogram(binwidth = 10, fill = "skyblue", color = "black", alpha = 0.7) +
-  labs(title = "Distribution of At Bat", x = "At Bat", y = "Frequency") +
-  theme_minimal()
-
-# Density plot for Hits
-ggplot(hitters_data, aes(x = Hits)) +
-  geom_density(fill = "skyblue", color = "black", alpha = 0.7) +
-  labs(title = "Density of Hits", x = "Hits", y = "Density") +
-  theme_minimal()
-
-# Density plot for log_Salary
-ggplot(hitters_data, aes(x = Logged_Salary)) +
-  geom_density(fill = "lightgreen", color = "black", alpha = 0.7) +
-  labs(title = "Density of Logged Salary", x = "Log Salary", y = "Density") +
-  theme_minimal()
-
 # Density plot for Birth Year 
 ggplot(hitters_data, aes(x = `Birth Year`)) +
   geom_density(fill = "skyblue", color = "black", alpha = 0.7) +
   labs(title = "Density of Birth Year", x = "Birth Year", y = "Density") +
   theme_minimal()
 
+# Histogram for At Bat
+ggplot(hitters_data, aes(x = `At Bat`)) +
+  geom_histogram(binwidth = 10, fill = "skyblue", color = "black", alpha = 0.7) +
+  labs(title = "Distribution of At Bat", x = "At Bat", y = "Frequency") +
+  theme_minimal()
+
 # Density plot for At Bat
 ggplot(hitters_data, aes(x = `At Bat`)) +
   geom_density(fill = "skyblue", color = "black", alpha = 0.7) +
   labs(title = "Density of At Bat", x = "At Bat", y = "Density") +
+  theme_minimal()
+
+# Histogram for log_Salary
+ggplot(hitters_data, aes(x = Logged_Salary)) +
+  geom_histogram(binwidth = 0.1, fill = "lightgreen", color = "black", alpha = 0.7) +
+  labs(title = "Distribution of Logged Salary", x = "Log Salary", y = "Frequency") +
+  theme_minimal()
+
+# Density plot for log_Salary
+ggplot(hitters_data, aes(x = Logged_Salary)) +
+  geom_density(fill = "lightgreen", color = "black", alpha = 0.7) +
+  labs(title = "Density of Logged Salary", x = "Log Salary", y = "Density") +
   theme_minimal()
 
 ```
@@ -191,15 +191,84 @@ Instead, we would use the Pearson Correlation test.
 numeric_filtered_data <- hitters_data[sapply(hitters_data, is.numeric)]
 cor_matrix <- cor(numeric_filtered_data, method = "pearson")
 
-
-
 ggcorrplot(cor_matrix, lab = TRUE, type = "lower", title = "Pearson Correlation Heatmap")
 
 ```
 
-### Scatterplots 
+### Check statistical significance of variables
 
-### Assumption tests
+```{r, echo=FALSE}
+model <- lm(Logged_Salary ~ Hits + `Games Played` + Stint + `At Bat` + Homeruns + RBI + `Birth Year`, data = hitters_data)
+
+summary(model)
+
+```
+
+### Check Assumptions 
+
+```{r, echo=FALSE}
+# Reduced model with only statistically significant variables
+model_sig <- lm(Logged_Salary ~ Hits + `Games Played` + Stint + `Birth Year`, data = hitters_data)
+
+# Check linearity 
+plot(model_sig, which = 1)  # Residuals vs Fitted
+
+# Check homoscedasticity
+library(lmtest)
+bptest(model_sig)  # Breusch-Pagan test
+
+# Check multicollinearity
+vif(model_sig)
+
+```
+
+Linearity:
+
+Breusch-Pagan Test:
+Interpretation: The very small p-value (< 0.05) strongly suggests that the residuals do not have constant variance — i.e., heteroscedasticity is present.
+Why it matters: This can lead to inefficient estimates and invalid p-values, so it's a critical issue.
+Fix: Use robust standard errors when reporting inference
+
+Variance Inflation Factor:
+Interpretation: All VIFs are very close to 1, indicating no multicollinearity.
+No action needed — this assumption is met.
+
+
+### Scatterplots of statistically significant variables
+
+```{r, echo=FALSE}
+library(ggplot2)
+
+# Scatterplot: Hits vs Logged_Salary
+ggplot(hitters_data, aes(x = Hits, y = Logged_Salary)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "lm", se = TRUE, color = "blue") +
+  labs(title = "Hits vs Logged Salary", x = "Hits", y = "Log(Salary)") +
+  theme_minimal()
+
+# Scatterplot: Hits vs Games Played
+ggplot(hitters_data, aes(x = `Games Played`, y = Logged_Salary)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "lm", se = TRUE, color = "blue") +
+  labs(title = "Games Played vs Logged Salary", x = "Games Played", y = "Log(Salary)") +
+  theme_minimal()
+
+# Scatterplot: Hits vs Stint
+ggplot(hitters_data, aes(x = Stint, y = Logged_Salary)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "lm", se = TRUE, color = "blue") +
+  labs(title = "Stint vs Logged Salary", x = "Stint", y = "Log(Salary)") +
+  theme_minimal()
+
+# Scatterplot: Hits vs Birth Year
+ggplot(hitters_data, aes(x = `Birth Year`, y = Logged_Salary)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = "lm", se = TRUE, color = "blue") +
+  labs(title = "Birth Year vs Logged Salary", x = "Birth Year", y = "Log(Salary)") +
+  theme_minimal()
+
+```
+
 
 ## Conclusions 
 

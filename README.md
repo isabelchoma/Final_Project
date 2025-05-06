@@ -319,9 +319,85 @@ we would use the Pearson Correlation test.
 
 ![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
 
-### Scatterplots
+### Check statistical significance of variables
 
-### Assumption tests
+    ## 
+    ## Call:
+    ## lm(formula = Logged_Salary ~ Hits + `Games Played` + Stint + 
+    ##     `At Bat` + Homeruns + RBI + `Birth Year`, data = hitters_data)
+    ## 
+    ## Residuals:
+    ##     Min      1Q  Median      3Q     Max 
+    ## -3.0593 -1.0246 -0.2064  0.9777  3.6905 
+    ## 
+    ## Coefficients:
+    ##                  Estimate Std. Error t value Pr(>|t|)    
+    ## (Intercept)    -5.015e+01  2.396e+00 -20.930   <2e-16 ***
+    ## Hits            5.279e-03  1.882e-04  28.044   <2e-16 ***
+    ## `Games Played`  5.830e-03  5.859e-04   9.950   <2e-16 ***
+    ## Stint          -3.753e-01  1.150e-01  -3.263   0.0011 ** 
+    ## `At Bat`        8.524e-04  7.834e-04   1.088   0.2766    
+    ## Homeruns        1.517e-02  2.704e-02   0.561   0.5746    
+    ## RBI             1.583e-02  9.548e-03   1.658   0.0973 .  
+    ## `Birth Year`    3.213e-02  1.210e-03  26.567   <2e-16 ***
+    ## ---
+    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+    ## 
+    ## Residual standard error: 1.268 on 11945 degrees of freedom
+    ## Multiple R-squared:  0.1322, Adjusted R-squared:  0.1317 
+    ## F-statistic: 260.1 on 7 and 11945 DF,  p-value: < 2.2e-16
+
+### Check Assumptions
+
+![](README_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+
+    ## Loading required package: zoo
+
+    ## 
+    ## Attaching package: 'zoo'
+
+    ## The following objects are masked from 'package:base':
+    ## 
+    ##     as.Date, as.Date.numeric
+
+    ## 
+    ##  studentized Breusch-Pagan test
+    ## 
+    ## data:  model_sig
+    ## BP = 328.89, df = 4, p-value < 2.2e-16
+
+    ##           Hits `Games Played`          Stint   `Birth Year` 
+    ##       1.018296       1.012060       1.012046       1.010262
+
+Linearity:
+
+Breusch-Pagan Test: Interpretation: The very small p-value (\< 0.05)
+strongly suggests that the residuals do not have constant variance —
+i.e., heteroscedasticity is present. Why it matters: This can lead to
+inefficient estimates and invalid p-values, so it’s a critical issue.
+Fix: Use robust standard errors when reporting inference
+
+Variance Inflation Factor: Interpretation: All VIFs are very close to 1,
+indicating no multicollinearity. No action needed — this assumption is
+met.
+
+### Scatterplots of statistically significant variables
+
+    ## `geom_smooth()` using formula = 'y ~ x'
+
+![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+
+    ## `geom_smooth()` using formula = 'y ~ x'
+
+![](README_files/figure-gfm/unnamed-chunk-10-2.png)<!-- -->
+
+    ## `geom_smooth()` using formula = 'y ~ x'
+
+![](README_files/figure-gfm/unnamed-chunk-10-3.png)<!-- -->
+
+    ## `geom_smooth()` using formula = 'y ~ x'
+
+![](README_files/figure-gfm/unnamed-chunk-10-4.png)<!-- -->
 
 ## Conclusions
 
