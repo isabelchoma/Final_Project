@@ -511,10 +511,81 @@ variables compared to other variables like Hits or Games Played.
 ## Conclusions
 
 The goal of our analysis was to analyze if there was a correlation
-between the number of hits an individual MLB player has during a season
-and the logged salary. It found that
+between a variety of performance metrics and the player’s logged salary.
+Our comprehensive analysis of MLB hitter salary determinants has yielded
+several important insights. Through both statistical analysis and
+machine learning approaches, we’ve identified key performance metrics
+that significantly influence player compensation.
+
+The most influential factor in determining a hitter’s salary is their
+number of hits in a season, confirming the fundamental importance of
+this basic performance metric in player valuation. This relationship
+makes intuitive sense since hits directly contribute to a team’s
+offensive production and scoring potential.
+
+Player age (represented by birth year) emerged as the second most
+important predictor, with a complex relationship to salary. While
+experience typically commands higher compensation, our analysis revealed
+that prime-age players (in their late 20s to early 30s) generally earn
+more than both younger and older players, creating an inverted U-shaped
+relationship.
+
+Games played also showed significant positive correlation with salary,
+indicating that availability and durability are highly valued by MLB
+teams. Players who consistently appear in the lineup command higher
+salaries, likely reflecting both their reliability and the cumulative
+impact of their contributions over a full season.
+
+Interestingly, our analysis revealed that stint (years with current
+team) has a negative correlation with salary, suggesting that player
+movement between teams may be associated with salary increases. This
+could indicate that free agency and team changes often result in salary
+bumps as players leverage competitive offers.
+
+These findings align with economic theories of labor markets in
+professional sports, where performance metrics serve as objective
+measures of productivity that determine compensation levels. Our machine
+learning models, particularly the Random Forest algorithm, demonstrated
+strong predictive power for player salaries, explaining approximately
+72% of the variance in compensation levels.
 
 ## Main Observations
+
+Performance-Based Compensation: Our analysis confirms that MLB player
+salaries are strongly linked to objective performance metrics, with
+batting performance (particularly hits) being the primary driver of
+compensation differences among players.
+
+Age-Value Relationship: We observed a significant correlation between
+player age and salary, with peak earning potential typically occurring
+during a player’s prime performance years rather than simply increasing
+with experience. This suggests teams invest most heavily in players they
+believe are at their performance peak.
+
+Durability Premium: The strong influence of games played on salary
+highlights that availability is a valued attribute in MLB compensation
+structures. Players who remain healthy and consistently available
+command higher salaries, reflecting the value of reliability.
+
+Non-Linear Relationships: Indicates that the relationships between
+performance metrics and compensation are complex and often non-linear,
+requiring sophisticated modeling approaches.
+
+Team Loyalty Dynamics: The negative correlation between stint (years
+with the same team) and salary suggests interesting market dynamics
+where changing teams may benefit players financially. This could reflect
+the impact of free agency on player bargaining power.
+
+Predictive Power: Our best model explained approximately 72% of salary
+variance, demonstrating that while performance metrics and player
+characteristics strongly influence compensation, other factors not
+captured in our dataset (such as market size, team budget constraints,
+or negotiation effectiveness) also play significant roles.
+
+Salary Distribution: The right-skewed distribution of player salaries
+confirms the “superstar effect” in MLB, where top performers earn
+disproportionately more than average players, creating a highly unequal
+compensation structure typical of entertainment and professional sports.
 
 ## Future Directions
 
@@ -531,4 +602,20 @@ salary.
 
 ## More Information
 
-Youtube video links here
+Youtube video link:
+
+Link to run the code in Kaggle:
+
+## Data Sources
+
+MLB Baseball Reference: <https://www.baseball-reference.com/>
+
+## Acknowledgments
+
+Data Organization Article reference:
+
+BLS:
+<https://www.bls.gov/opub/mlr/cwc/baseballs-changing-salary-structure.pdf>
+
+Forbes:
+<https://www.forbes.com/sites/maurybrown/2019/02/11/inside-the-numbers-the-player-salary-battle-lines-between-mlb-and-the-mlbpa/>
