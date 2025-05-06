@@ -186,6 +186,9 @@ Instead, we would use the Pearson Correlation test.
 
 ### Pearson Correlation heatmap
 
+Before running any exploratory analysis, we decided to see if there are any strong correlations that stand out for our independent variables of interest and our dependent variable, logged salary. According to the heatmap scale, the more correlated the variables are, the darker the color will be. We also have the actual correlations between the variables presented in each box. 
+
+
 ```{r, echo=FALSE}
 #Compute Pearson correlation
 numeric_filtered_data <- hitters_data[sapply(hitters_data, is.numeric)]
@@ -194,6 +197,8 @@ cor_matrix <- cor(numeric_filtered_data, method = "pearson")
 ggcorrplot(cor_matrix, lab = TRUE, type = "lower", title = "Pearson Correlation Heatmap")
 
 ```
+
+Surprisingly, we found that there are not many strong correlations between the variables of interest and our dependent variable. Even though the strongest correlation between an independent variable and salary is Year ID at .46, this is not helpful to our interpretation of how strongly the data is correlated since we are including this variable to represent that this is not time series data. Therefore, this correlation is not important. The next strongest correlation is for the independent variable, hits, with a correlation coefficient	of .26. This means that out of all the independent variables we looked at, hits are most likely to predict the outcome of a players’ salary. This is as expected, as the more hits a player has, the more likely they are going to get paid higher salaries, since their overall performance is high. The correlation of 0.21 between Birth Year and logged salary is moderate and positive, meaning that players who are older (i.e., having a higher birth year number) tend to have higher logged salaries. This might reflect the effect of experience and seniority, as older players may earn higher salaries due to their experience in the league.The correlation between At Bat and logged salary is 0.11, which indicates a weak positive relationship. This implies that while there is a slight tendency for players with more at-bats to have a higher logged salary, the relationship is not substantial.
 
 ### Check statistical significance of variables
 
