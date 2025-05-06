@@ -142,7 +142,11 @@ ggplot(hitters_data, aes(x = Hits)) +
   geom_density(fill = "skyblue", color = "black", alpha = 0.7) +
   labs(title = "Density of Hits", x = "Hits", y = "Density") +
   theme_minimal()
+```
 
+The distribution of Hits appears right-skewed, with a larger number of players accumulating fewer hits. The peak of the histogram is centered around a moderate value, suggesting that most players have a relatively average number of hits. There is a tail extending towards higher values, which indicates that there are a small number of players with many hits. The spread of the data, particularly with the long tail on the higher end, suggests that there are outliers or a small group of players who have significantly more hits than the majority.
+
+```{r, echo=FALSE}
 # Histogram for Birth Year 
 ggplot(hitters_data, aes(x = `Birth Year`)) +
   geom_histogram(binwidth = 10, fill = "skyblue", color = "black", alpha = 0.7) +
@@ -154,7 +158,11 @@ ggplot(hitters_data, aes(x = `Birth Year`)) +
   geom_density(fill = "skyblue", color = "black", alpha = 0.7) +
   labs(title = "Density of Birth Year", x = "Birth Year", y = "Density") +
   theme_minimal()
+```
 
+The distribution of Birth Year shows the distribution of players' birth years, with clear peaks around the 1940s, 1960s, and 1980s. The highest frequencies occur for players born in the 1960s and 1980s, with a smaller peak for those born in the 1940s. Fewer players were born in the earlier (1930s) or later years (late 1990s and beyond), indicating that most players fall into these key birth-year ranges, likely reflecting the active playing years of those players in the dataset.
+
+```{r, echo=FALSE}
 # Histogram for At Bat
 ggplot(hitters_data, aes(x = `At Bat`)) +
   geom_histogram(binwidth = 10, fill = "skyblue", color = "black", alpha = 0.7) +
@@ -166,7 +174,11 @@ ggplot(hitters_data, aes(x = `At Bat`)) +
   geom_density(fill = "skyblue", color = "black", alpha = 0.7) +
   labs(title = "Density of At Bat", x = "At Bat", y = "Density") +
   theme_minimal()
+```
 
+The At Bat variable shows that most players have very few at-bats, with the distribution being heavily skewed towards lower values. Only a small subset of players have a significant number of at-bats, indicating a few high-usage players in contrast to many with minimal playing time.
+
+```{r, echo=FALSE}
 # Histogram for log_Salary
 ggplot(hitters_data, aes(x = Logged_Salary)) +
   geom_histogram(binwidth = 0.1, fill = "lightgreen", color = "black", alpha = 0.7) +
@@ -181,7 +193,9 @@ ggplot(hitters_data, aes(x = Logged_Salary)) +
 
 ```
 
-Both variables are not normally distributed, so we cannot run tests that assume normality, such as the Shapiro-Wilk test or Q-Q plots.
+The distribution of logged salary shows a right-skewed distribution, with most players having salaries concentrated between log values of 12 and 13. This suggests that the majority of players earn salaries within a moderate range, while a small number of players have significantly higher salaries, creating a long right tail. This indicates the presence of outliers, typical of professional sports where a few players earn much more than the majority.
+
+The variables are not normally distributed, so we cannot run tests that assume normality, such as the Shapiro-Wilk test or Q-Q plots.
 Instead, we would use the Pearson Correlation test.
 
 ### Pearson Correlation heatmap

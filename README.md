@@ -309,9 +309,45 @@ Logged_Salary
 
 ### Distribution of Variables
 
-![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-6-2.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-6-3.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-6-4.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-6-5.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-6-6.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-6-7.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-6-8.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-6-2.png)<!-- -->
 
-Both variables are not normally distributed, so we cannot run tests that
+The distribution of Hits appears right-skewed, with a larger number of
+players accumulating fewer hits. The peak of the histogram is centered
+around a moderate value, suggesting that most players have a relatively
+average number of hits. There is a tail extending towards higher values,
+which indicates that there are a small number of players with many hits.
+The spread of the data, particularly with the long tail on the higher
+end, suggests that there are outliers or a small group of players who
+have significantly more hits than the majority.
+
+![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-7-2.png)<!-- -->
+
+The distribution of Birth Year shows the distribution of players’ birth
+years, with clear peaks around the 1940s, 1960s, and 1980s. The highest
+frequencies occur for players born in the 1960s and 1980s, with a
+smaller peak for those born in the 1940s. Fewer players were born in the
+earlier (1930s) or later years (late 1990s and beyond), indicating that
+most players fall into these key birth-year ranges, likely reflecting
+the active playing years of those players in the dataset.
+
+![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-8-2.png)<!-- -->
+
+The At Bat variable shows that most players have very few at-bats, with
+the distribution being heavily skewed towards lower values. Only a small
+subset of players have a significant number of at-bats, indicating a few
+high-usage players in contrast to many with minimal playing time.
+
+![](README_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-9-2.png)<!-- -->
+
+The distribution of logged salary shows a right-skewed distribution,
+with most players having salaries concentrated between log values of 12
+and 13. This suggests that the majority of players earn salaries within
+a moderate range, while a small number of players have significantly
+higher salaries, creating a long right tail. This indicates the presence
+of outliers, typical of professional sports where a few players earn
+much more than the majority.
+
+The variables are not normally distributed, so we cannot run tests that
 assume normality, such as the Shapiro-Wilk test or Q-Q plots. Instead,
 we would use the Pearson Correlation test.
 
@@ -324,7 +360,7 @@ heatmap scale, the more correlated the variables are, the darker the
 color will be. We also have the actual correlations between the
 variables presented in each box.
 
-![](README_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
 
 Surprisingly, we found that there are not many strong correlations
 between the variables of interest and our dependent variable. Even
@@ -378,7 +414,7 @@ the relationship is not substantial.
 
 ### Check Assumptions
 
-![](README_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
     ## Loading required package: zoo
 
@@ -414,19 +450,19 @@ met.
 
     ## `geom_smooth()` using formula = 'y ~ x'
 
-![](README_files/figure-gfm/unnamed-chunk-10-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
 
     ## `geom_smooth()` using formula = 'y ~ x'
 
-![](README_files/figure-gfm/unnamed-chunk-10-2.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-13-2.png)<!-- -->
 
     ## `geom_smooth()` using formula = 'y ~ x'
 
-![](README_files/figure-gfm/unnamed-chunk-10-3.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-13-3.png)<!-- -->
 
     ## `geom_smooth()` using formula = 'y ~ x'
 
-![](README_files/figure-gfm/unnamed-chunk-10-4.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-13-4.png)<!-- -->
 
 ## Conclusions
 
