@@ -219,11 +219,29 @@ Surprisingly, we found that there are not many strong correlations between the v
 ```{r, echo=FALSE}
 model <- lm(Logged_Salary ~ Hits + `Games Played` + Stint + `At Bat` + Homeruns + RBI + `Birth Year`, data = hitters_data)
 
-summary(model)
+model_summary <- summary(model)
+
+# Extract coefficients
+coef_table <- as.data.frame(model_summary$coefficients)
+
+# Optionally rename the columns for clarity
+colnames(coef_table) <- c("Estimate", "Std. Error", "t value", "Pr(>|t|)")
+
+# Load knitr for pretty printing
+library(knitr)
+
+# Print nicely formatted table
+kable(coef_table, caption = "Linear Regression Results for Logged_Salary")
 
 ```
 
+In order to test if the correlations between these variables and salary were significant, we ran hypothesis tests on each of the variables depicted in the heatmap. We ran a t-test to determine if the p-values were small enough for each variable to be statistically significant. After running these tests, Hits, Games Played, and Birth Year all have highly significant p-values (well below 0.001), meaning these variables strongly influence logged salary. Stint is also significant (p < 0.01), but its effect is negative. At Bat and Homeruns have non-significant p-values (above 0.05), meaning they do not meaningfully contribute to the model. RBI is marginally significant with a p-value close to 0.1, suggesting a weak but possibly important relationship with salary. 
+
+Our analysis in the next section will include only the variables that had a statistically significant effect on salary. 
+
 ### Check Assumptions 
+
+Because we ran statistical tests, we need to run tests to check for linearity, homoscedasicity, and multicollinearity. We found above that the variables are not normally distributed, so we are running non-parametric tests. 
 
 ```{r, echo=FALSE}
 # Reduced model with only statistically significant variables
@@ -242,6 +260,7 @@ vif(model_sig)
 ```
 
 Linearity:
+The Residuals vs. Fitted plot shows the residuals (the differences between the observed and predicted values) on the y-axis and the fitted values (predicted values) on the x-axis. The plot displays a random scatter of points around the horizontal line at zero, indicating that the model is generally well-fitted. The slightly decreasing trend in the residuals, however, suggests a mild non-linear pattern that the model might not be capturing perfectly. This could be a signal to consider potential improvements, such as adding non-linear terms or interactions. Overall, the residuals seem evenly distributed around zero, implying no severe heteroskedasticity or major model misspecifications.
 
 Breusch-Pagan Test:
 Interpretation: The very small p-value (< 0.05) strongly suggests that the residuals do not have constant variance — i.e., heteroscedasticity is present.
@@ -251,7 +270,6 @@ Fix: Use robust standard errors when reporting inference
 Variance Inflation Factor:
 Interpretation: All VIFs are very close to 1, indicating no multicollinearity.
 No action needed — this assumption is met.
-
 
 ### Scatterplots of statistically significant variables
 
@@ -289,10 +307,20 @@ ggplot(hitters_data, aes(x = `Birth Year`, y = Logged_Salary)) +
 ```
 
 
+
 ## Conclusions 
+
+The goal of our analysis was to analyze if there was a correlation between the number of hits an individual MLB player has during a season and the logged salary. It found that 
+
 
 ## Main Observations 
 
+
+
 ## Future Directions
 
+This information that we have extracted from the dataset can help determine how much players need to be contributing to their team in order to increase their salaries. It would now be interesting to look at how the other half of baseball, the outfield, affects individual players salaries. This would differ since it would have to be specific to position in the outfield, for example a pitcher and a first baseman could not be judged on the same scale. There would need to be multiple forms for each position across teams and use variables like pitches, catches, forced outs, and others in order to look at the impact on their salary. 
 
+## More Information 
+
+Youtube video links here 

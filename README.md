@@ -386,33 +386,40 @@ the relationship is not substantial.
 
 ### Check statistical significance of variables
 
-    ## 
-    ## Call:
-    ## lm(formula = Logged_Salary ~ Hits + `Games Played` + Stint + 
-    ##     `At Bat` + Homeruns + RBI + `Birth Year`, data = hitters_data)
-    ## 
-    ## Residuals:
-    ##     Min      1Q  Median      3Q     Max 
-    ## -3.0593 -1.0246 -0.2064  0.9777  3.6905 
-    ## 
-    ## Coefficients:
-    ##                  Estimate Std. Error t value Pr(>|t|)    
-    ## (Intercept)    -5.015e+01  2.396e+00 -20.930   <2e-16 ***
-    ## Hits            5.279e-03  1.882e-04  28.044   <2e-16 ***
-    ## `Games Played`  5.830e-03  5.859e-04   9.950   <2e-16 ***
-    ## Stint          -3.753e-01  1.150e-01  -3.263   0.0011 ** 
-    ## `At Bat`        8.524e-04  7.834e-04   1.088   0.2766    
-    ## Homeruns        1.517e-02  2.704e-02   0.561   0.5746    
-    ## RBI             1.583e-02  9.548e-03   1.658   0.0973 .  
-    ## `Birth Year`    3.213e-02  1.210e-03  26.567   <2e-16 ***
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 1.268 on 11945 degrees of freedom
-    ## Multiple R-squared:  0.1322, Adjusted R-squared:  0.1317 
-    ## F-statistic: 260.1 on 7 and 11945 DF,  p-value: < 2.2e-16
+|                |    Estimate | Std. Error |     t value | Pr(\>\|t\|) |
+|:---------------|------------:|-----------:|------------:|------------:|
+| (Intercept)    | -50.1519931 |  2.3961709 | -20.9300571 |   0.0000000 |
+| Hits           |   0.0052791 |  0.0001882 |  28.0437345 |   0.0000000 |
+| `Games Played` |   0.0058299 |  0.0005859 |   9.9501513 |   0.0000000 |
+| Stint          |  -0.3752865 |  0.1150043 |  -3.2632379 |   0.0011046 |
+| `At Bat`       |   0.0008524 |  0.0007834 |   1.0880760 |   0.2765835 |
+| Homeruns       |   0.0151750 |  0.0270353 |   0.5613038 |   0.5746010 |
+| RBI            |   0.0158339 |  0.0095483 |   1.6582882 |   0.0972856 |
+| `Birth Year`   |   0.0321342 |  0.0012096 |  26.5667904 |   0.0000000 |
+
+Linear Regression Results for Logged_Salary
+
+In order to test if the correlations between these variables and salary
+were significant, we ran hypothesis tests on each of the variables
+depicted in the heatmap. We ran a t-test to determine if the p-values
+were small enough for each variable to be statistically significant.
+After running these tests, Hits, Games Played, and Birth Year all have
+highly significant p-values (well below 0.001), meaning these variables
+strongly influence logged salary. Stint is also significant (p \< 0.01),
+but its effect is negative. At Bat and Homeruns have non-significant
+p-values (above 0.05), meaning they do not meaningfully contribute to
+the model. RBI is marginally significant with a p-value close to 0.1,
+suggesting a weak but possibly important relationship with salary.
+
+Our analysis in the next section will include only the variables that
+had a statistically significant effect on salary.
 
 ### Check Assumptions
+
+Because we ran statistical tests, we need to run tests to check for
+linearity, homoscedasicity, and multicollinearity. We found above that
+the variables are not normally distributed, so we are running
+non-parametric tests.
 
 ![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
@@ -434,7 +441,17 @@ the relationship is not substantial.
     ##           Hits `Games Played`          Stint   `Birth Year` 
     ##       1.018296       1.012060       1.012046       1.010262
 
-Linearity:
+Linearity: The Residuals vs. Fitted plot shows the residuals (the
+differences between the observed and predicted values) on the y-axis and
+the fitted values (predicted values) on the x-axis. The plot displays a
+random scatter of points around the horizontal line at zero, indicating
+that the model is generally well-fitted. The slightly decreasing trend
+in the residuals, however, suggests a mild non-linear pattern that the
+model might not be capturing perfectly. This could be a signal to
+consider potential improvements, such as adding non-linear terms or
+interactions. Overall, the residuals seem evenly distributed around
+zero, implying no severe heteroskedasticity or major model
+misspecifications.
 
 Breusch-Pagan Test: Interpretation: The very small p-value (\< 0.05)
 strongly suggests that the residuals do not have constant variance —
@@ -466,6 +483,25 @@ met.
 
 ## Conclusions
 
+The goal of our analysis was to analyze if there was a correlation
+between the number of hits an individual MLB player has during a season
+and the logged salary. It found that
+
 ## Main Observations
 
 ## Future Directions
+
+This information that we have extracted from the dataset can help
+determine how much players need to be contributing to their team in
+order to increase their salaries. It would now be interesting to look at
+how the other half of baseball, the outfield, affects individual players
+salaries. This would differ since it would have to be specific to
+position in the outfield, for example a pitcher and a first baseman
+could not be judged on the same scale. There would need to be multiple
+forms for each position across teams and use variables like pitches,
+catches, forced outs, and others in order to look at the impact on their
+salary.
+
+## More Information
+
+Youtube video links here
