@@ -1,7 +1,69 @@
 README
 ================
 
+## Introduction
+
+As college students, we are constantly busy with classes, homeworks, and
+exams. We are all very involved in extracurricular activities outside of
+classes, which takes up a lot of time. However, in the free time that we
+do have, we love to get together with our friends and watch sports
+games. Whether it is the fall semester or the spring semester, there is
+always a sport being played (football in the fall, basketball in the
+winter, baseball in the spring). Since this project is being completed
+in the spring season, we decided to focus our attention on baseball.
+
+Specifically, we are interested in learning more about what influences a
+baseball player’s salary. Is it their batting average? Their experience?
+Their age? The team they play for? We will analyze these variables, plus
+many others, and how they influence a player’s salary. In this case, we
+are interested in assessing the following question: What best influences
+a hitters’ baseball player’s salary?
+
+To start, we will understand the data by reading literature about
+impacts on a baseball player’s salary. This will allow us to absorb the
+material we are trying to learn more about before actually starting to
+import and analyze the data into an open source data software. Then, we
+will provide some descriptive and numeric statistics of the dataset we
+collected. This will help provide an overview of the important features
+of the variables. Next, we will do some exploratory data analysis,
+analyzing any correlations between the independent variables of interest
+and the dependent variable. We will utilize plots and graphs to help us
+visualize the data. Finally, we will use machine learning models to see
+what the best way to identify patterns, make predictions, and improve
+its performance over time.
+
+We will calculate the batting average by dividing each player’s total
+hits per season by their total at-bat. This batting average is different
+because a hit is a batter reaching first base. It is a good starting
+point for evaluating a player’s offensive skills. A higher batting
+average suggests a batter is more consistent in making solid contact
+with the ball and getting on base via hits.
+
 ## Data Organization
+
+Data was collected using a website called Baseball Reference, which has
+baseball history and statistics for Major League Baseball. It is the
+complete source for current and historical baseball players, teams,
+scores, and leaders. Specifically, our dataset focuses on statistics
+from 1985, showing individuals’ performance, age, and other relevant
+information for a singular season.
+
+According to the Bureau Labor of Statistics, salary trends change over
+time. With free agencies and salary arbitration, salaries escalate. In
+addition, TV revenues fuel salary expansion, as the League has more
+money to work with. In order to understand how much a team can spend on
+its players, it is important to understand the distribution of their
+money. For the owners, player compensation looks like this: Major League
+Player Compensation + Benefit Plan Costs + Postseason Share Payments +
+Minor League Signing Bonuses (not including associated tax) + Minor
+League Salaries And Benefits.
+
+So, in order to comprehend the salary of an individual player, we must
+take this distribution into account. Salaries to the players themselves
+are comparable to salaries in the entertainment industry: star
+performers disproportionately earn higher amounts. These higher amounts
+are influenced by performance, seniority, and market size, with
+performance being the dominant factor.
 
 After filtering the data by removing the irrelevant attributes to our
 analysis, these are the attributes included in our data, as well as
@@ -247,7 +309,7 @@ Logged_Salary
 
 ### Distribution of Variables
 
-![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-6-2.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-6-3.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-6-4.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-6-2.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-6-3.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-6-4.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-6-5.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-6-6.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-6-7.png)<!-- -->![](README_files/figure-gfm/unnamed-chunk-6-8.png)<!-- -->
 
 Both variables are not normally distributed, so we cannot run tests that
 assume normality, such as the Shapiro-Wilk test or Q-Q plots. Instead,
