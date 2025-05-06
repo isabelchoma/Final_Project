@@ -1,6 +1,8 @@
 README
 ================
 
+By Isabel Choma, Isabella Reid, Kiley Meringer, and Sophia Hess
+
 ## Introduction
 
 As college students, we are constantly busy with classes, homeworks, and

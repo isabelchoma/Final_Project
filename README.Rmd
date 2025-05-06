@@ -14,6 +14,18 @@ knitr::opts_chunk$set(echo = TRUE)
 #Load the dataset
 baseball_data <- read.csv('./Data/baseball_1985_2016.csv')
 
+# Check if packages already installed, and install if not
+if (!require("knitr")) install.packages("knitr"); library(knitr)
+if (!require("ggplot2")) install.packages("ggplot2"); library(ggplot2)
+if (!require("dplyr")) install.packages("dplyr"); library(dplyr)
+if (!require("corrplot")) install.packages("corrplot"); library(corrplot)
+if (!require("tidyr")) install.packages("tidyr"); library(tidyr)
+if (!require("ggpubr")) install.packages("ggpubr"); library(ggpubr)
+if (!require("stats")) install.packages("stats"); library(stats)  # See note below
+if (!require("car")) install.packages("car"); library(car)
+if (!require("kableExtra")) install.packages("kableExtra"); library(kableExtra)
+if (!require("ggcorrplot")) install.packages("ggcorrplot"); library(ggcorrplot)
+
 #Load necessary packages 
 library(knitr)
 library(ggplot2)
@@ -24,9 +36,10 @@ library(ggpubr)
 library(stats)
 library(car)
 library(kableExtra)
-#install.packages("ggcorrplot")  # if not already installed
 library(ggcorrplot)
 ```
+
+By Isabel Choma, Isabella Reid, Kiley Meringer, and Sophia Hess
 
 ## Introduction 
 
