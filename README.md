@@ -425,15 +425,6 @@ non-parametric tests.
 
 ![](README_files/figure-gfm/unnamed-chunk-12-1.png)<!-- -->
 
-    ## Loading required package: zoo
-
-    ## 
-    ## Attaching package: 'zoo'
-
-    ## The following objects are masked from 'package:base':
-    ## 
-    ##     as.Date, as.Date.numeric
-
     ## 
     ##  studentized Breusch-Pagan test
     ## 
@@ -467,8 +458,6 @@ met.
 
 ### Scatterplots of statistically significant variables
 
-    ## `geom_smooth()` using formula = 'y ~ x'
-
 ![](README_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
 
 The scatterplot shows a positive relationship between Hits and Logged
@@ -477,8 +466,6 @@ salaries. While the correlation is evident, the scatter of the data
 points suggests that Hits is only one of several factors affecting
 salary.
 
-    ## `geom_smooth()` using formula = 'y ~ x'
-
 ![](README_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
 
 The scatterplot shows a slight positive correlation between Games Played
@@ -486,8 +473,6 @@ and Logged Salary, with higher numbers of games played tending to
 correspond to slightly higher salaries. However, the relationship is
 weak, and the data points are dispersed, indicating that Games Played is
 not a strong predictor of Logged Salary in this model.
-
-    ## `geom_smooth()` using formula = 'y ~ x'
 
 ![](README_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
 
@@ -499,8 +484,6 @@ concentrated at Stint = 1, and only a small number of players have
 higher stint values. The relationship appears weak, and the trend is
 primarily driven by the concentration of players at the lower end of the
 Stint variable.
-
-    ## `geom_smooth()` using formula = 'y ~ x'
 
 ![](README_files/figure-gfm/unnamed-chunk-16-1.png)<!-- -->
 
