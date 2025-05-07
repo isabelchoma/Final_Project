@@ -517,14 +517,14 @@ possible non-linear relationships, interactions, and unmeasured factors,
 so we are using the randomForest test instead, which handles
 non-linearity and interactions.
 
-R-squared improved to 0.1882189, meaning the model explains 18.82% of
+R-squared improved to 0.1923417, meaning the model explains 19.23% of
 variance in Logged_Salary.
 
-RMSE increased to 1.2542518, meaning he model’s predictions are now off
-by about 1.254 log-salary units on average
+RMSE increased to 1.2332885, meaning he model’s predictions are now off
+by about 1.23 log-salary units on average
 
-MAE decreased to 1.0450920, meaning now the average absolute prediction
-error is about 1.045 log-salary units
+MAE decreased to 1.0202420, meaning now the average absolute prediction
+error is about 1.02 log-salary units
 
 The model is still under-fitting.
 
