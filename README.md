@@ -574,8 +574,8 @@ These findings align with economic theories of labor markets in
 professional sports, where performance metrics serve as objective
 measures of productivity that determine compensation levels. Our machine
 learning models, particularly the Random Forest algorithm, demonstrated
-strong predictive power for player salaries, explaining approximately
-72% of the variance in compensation levels.
+moderate predictive power for player salaries, explaining approximately
+25% of the variance in compensation levels.
 
 ## Main Observations
 
@@ -604,11 +604,11 @@ with the same team) and salary suggests interesting market dynamics
 where changing teams may benefit players financially. This could reflect
 the impact of free agency on player bargaining power.
 
-Predictive Power: Our best model explained approximately 72% of salary
+Predictive Power: Our best model explained approximately 25% of salary
 variance, demonstrating that while performance metrics and player
-characteristics strongly influence compensation, other factors not
-captured in our dataset (such as market size, team budget constraints,
-or negotiation effectiveness) also play significant roles.
+characteristics do influence compensation, other factors not captured in
+our dataset (such as market size, team budget constraints, or
+negotiation effectiveness) also play significant roles.
 
 Salary Distribution: The right-skewed distribution of player salaries
 confirms the “superstar effect” in MLB, where top performers earn
@@ -620,9 +620,9 @@ compensation structure typical of entertainment and professional sports.
 This information that we have extracted from the dataset can help
 determine how much players need to be contributing to their team in
 order to increase their salaries. It would now be interesting to look at
-how the other half of baseball, the outfield, affects individual players
-salaries. This would differ since it would have to be specific to
-position in the outfield, for example a pitcher and a first baseman
+the factors that affect a pitcher’s salary, as well as the factors that
+affect a hitter’s. This would differ since it would have to be specific
+to position in the outfield, for example a pitcher and a first baseman
 could not be judged on the same scale. There would need to be multiple
 forms for each position across teams and use variables like pitches,
 catches, forced outs, and others in order to look at the impact on their
