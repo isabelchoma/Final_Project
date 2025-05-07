@@ -534,7 +534,7 @@ much it is under-fitting.
 ![](README_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
 
 We can see from this plot that the predictions are clustered far from
-the diagonal, so the model is under-fitting.
+the diagonal, so the model is under-fitting
 
 ## Conclusions
 

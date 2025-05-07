@@ -428,7 +428,7 @@ ggplot(plot_data, aes(x = Actual, y = Predicted, color = DataType)) +
 
 ```
 
-We can see from this plot that the predictions are clustered far from the diagonal, so the model is under-fitting. 
+We can see from this plot that the predictions are clustered far from the diagonal, so the model is under-fitting 
 
 ## Conclusions 
 
