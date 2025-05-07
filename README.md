@@ -634,7 +634,7 @@ Youtube video link:
 
 Link to run the code in Kaggle:
 
-Link to io page:
+Link to io page: <https://isabelchoma.github.io/Final_Project/>
 
 ## Data Sources
 
