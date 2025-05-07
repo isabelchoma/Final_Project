@@ -498,9 +498,9 @@ variables compared to other variables like Hits or Games Played.
 We are interested in predicting the salary outcome variable to forecast
 future outcomes based on learned patterns.
 
-Our model had low explanatory power, with an R-squared of 0.08878462,
-which means that the model explains only 8.87% of the variance in
-Logged_Salary.
+We tried a linear model, which had low explanatory power, with an
+R-squared of 0.08878462, which means that the model explains only 8.87%
+of the variance in Logged_Salary.
 
 RMSE = 1.08445407 (Root Mean Squared Error) The model’s predictions are
 off by about 1.08 log-salary units on average. Since Logged_Salary is a
@@ -517,19 +517,19 @@ possible non-linear relationships, interactions, and unmeasured factors,
 so we are using the randomForest test instead, which handles
 non-linearity and interactions.
 
-R-squared improved to 0.1923417, meaning the model explains 19.23% of
-variance in Logged_Salary.
+The Random Forest model shows moderate predictive performance across the
+train, validation, and test sets. The root mean square error (RMSE)
+remains consistent across all datasets—1.214 for training, 1.2665 for
+validation, and 1.255 for testing—indicating the model generalizes
+reasonably well without significant overfitting. However, the R² values
+are relatively low (0.2492 on training, 0.1418 on validation, and 0.1643
+on testing), suggesting that the model explains only a small portion of
+the variance in the target variable. Overall, while the model is stable,
+its predictive power is limited, and further tuning or alternative
+modeling approaches may be needed to improve performance.
 
-RMSE increased to 1.2332885, meaning he model’s predictions are now off
-by about 1.23 log-salary units on average
-
-MAE decreased to 1.0202420, meaning now the average absolute prediction
-error is about 1.02 log-salary units
-
-The model is still under-fitting.
-
-We wanted to plot the model to see how it fits the data and how much it
-is under-fitting.
+We also wanted to plot the model to see how it fits the data and how
+much it is under-fitting.
 
 ![](README_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
 

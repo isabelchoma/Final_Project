@@ -332,33 +332,27 @@ We are interested in predicting the salary outcome variable to forecast future o
 
 ```{r, include=FALSE}
 
-# Train/test split
-set.seed(123)
-split_idx <- createDataPartition(hitters_data$Logged_Salary, p = 0.8, list = FALSE)
 hitters_data2 <- hitters_data
-colnames(hitters_data2)[4]="Games_Played"
-colnames(hitters_data2)[6]="Birth_Year"
-train_data <- hitters_data2[split_idx, ]
-test_data <- hitters_data2[-split_idx, ]
-
+colnames(hitters_data2)[4] = "Games_Played"
+colnames(hitters_data2)[6] = "Birth_Year"
+  
 # Define formula
 formula <- Logged_Salary ~ Hits + Games_Played + Stint + Birth_Year
 
-### LINEAR REGRESSION
-lm_model <- lm(formula, data = train_data)
-summary(lm_model)
+# Split data: 60% train, 20% validation, 20% test
+set.seed(123)
+train_idx <- createDataPartition(hitters_data2$Logged_Salary, p = 0.6, list = FALSE)
+train_data <- hitters_data2[train_idx, ]
+temp_data <- hitters_data2[-train_idx, ]
 
-# Predict
-lm_preds <- predict(lm_model, newdata = test_data)
-
-# Evaluate
-lm_results <- postResample(lm_preds, test_data$Logged_Salary)
-print("Linear Regression Results:")
-print(lm_results)
+# Now split remaining 40% equally into validation and test
+validation_idx <- createDataPartition(temp_data$Logged_Salary, p = 0.5, list = FALSE)
+validation_data <- temp_data[validation_idx, ]
+test_data <- temp_data[-validation_idx, ]
 
 ```
 
-Our model had low explanatory power, with an R-squared of 0.08878462, which means that the model explains only 8.87% of the variance in Logged_Salary.
+We tried a linear model, which had low explanatory power, with an R-squared of 0.08878462, which means that the model explains only 8.87% of the variance in Logged_Salary.
 
 RMSE = 1.08445407 (Root Mean Squared Error)
 The model’s predictions are off by about 1.08 log-salary units on average.
@@ -371,41 +365,66 @@ So, the model is under-fitting because the linear model can't capture possible n
 
 ```{r, include=FALSE}
 
-### RANDOM FOREST
-rf_model <- randomForest(formula, data = train_data, ntree = 1000, mtry = 4, maxnodes = 30, importance = TRUE)
+# Train Random Forest on TRAINING data
+rf_model <- randomForest(formula, data = train_data, ntree = 500, importance = TRUE)
 
-# Predict
-rf_preds <- predict(rf_model, newdata = test_data)
+# Predict on training, validation, and test data
+train_preds <- predict(rf_model, newdata = train_data)
+validation_preds <- predict(rf_model, newdata = validation_data)
+test_preds <- predict(rf_model, newdata = test_data)
 
-# Evaluate
-rf_results <- postResample(rf_preds, test_data$Logged_Salary)
-print("Random Forest Results:")
-print(rf_results)
+# Create combined dataframe for plotting
+plot_data <- data.frame(
+  Actual = c(train_data$Logged_Salary, validation_data$Logged_Salary, test_data$Logged_Salary),
+  Predicted = c(train_preds, validation_preds, test_preds),
+  DataType = factor(rep(c("Train", "Validation", "Test"),
+                        c(nrow(train_data), nrow(validation_data), nrow(test_data))))
+)
 
-# Feature importance
-varImpPlot(rf_model, main = "Random Forest Feature Importance")
+# Calculate RMSE
+rmse_train <- sqrt(mean((train_preds - train_data$Logged_Salary)^2))
+rmse_validation <- sqrt(mean((validation_preds - validation_data$Logged_Salary)^2))
+rmse_test <- sqrt(mean((test_preds - test_data$Logged_Salary)^2))
+
+# Calculate R-squared
+r2_train <- cor(train_preds, train_data$Logged_Salary)^2
+r2_validation <- cor(validation_preds, validation_data$Logged_Salary)^2
+r2_test <- cor(test_preds, test_data$Logged_Salary)^2
+
+# Print results
+cat("=== RANDOM FOREST PERFORMANCE ===\n")
+cat("TRAIN SET:\n")
+cat("   RMSE: ", round(rmse_train, 4), "\n")
+cat("   R^2 : ", round(r2_train, 4), "\n\n")
+
+cat("VALIDATION SET:\n")
+cat("   RMSE: ", round(rmse_validation, 4), "\n")
+cat("   R^2 : ", round(r2_validation, 4), "\n\n")
+
+cat("TEST SET:\n")
+cat("   RMSE: ", round(rmse_test, 4), "\n")
+cat("   R^2 : ", round(r2_test, 4), "\n")
+
 
 ```
 
-R-squared improved to 0.1923417, meaning the model explains 19.23% of variance in Logged_Salary. 
+The Random Forest model shows moderate predictive performance across the train, validation, and test sets. The root mean square error (RMSE) remains consistent across all datasets—1.214 for training, 1.2665 for validation, and 1.255 for testing—indicating the model generalizes reasonably well without significant overfitting. However, the R² values are relatively low (0.2492 on training, 0.1418 on validation, and 0.1643 on testing), suggesting that the model explains only a small portion of the variance in the target variable. Overall, while the model is stable, its predictive power is limited, and further tuning or alternative modeling approaches may be needed to improve performance.
 
-RMSE increased to 1.2332885, meaning he model’s predictions are now off by about 1.23 log-salary units on average
-
-MAE decreased to 1.0202420, meaning now the average absolute prediction error is about 1.02 log-salary units
-
-The model is still under-fitting. 
-
-We wanted to plot the model to see how it fits the data and how much it is under-fitting.
+We also wanted to plot the model to see how it fits the data and how much it is under-fitting.
 
 ```{r, echo=FALSE}
 
-#Plot representing underfitting or overfitting
-ggplot(data = NULL, aes(x = test_data$Logged_Salary, y = rf_preds)) +
-  geom_point(color = "blue") +
+# Plot: Predicted vs Actual for all three sets
+ggplot(plot_data, aes(x = Actual, y = Predicted, color = DataType)) +
+  geom_point(alpha = 0.6) +
   geom_abline(slope = 1, intercept = 0, color = "red", linetype = "dashed") +
-  labs(title = "Random Forest: Predicted vs Actual Logged Salary",
+  labs(title = "Random Forest: Predicted vs Actual (Train vs Validation vs Test)",
        x = "Actual Logged Salary",
-       y = "Predicted Logged Salary")
+       y = "Predicted Logged Salary") +
+  theme_minimal() +
+  theme(legend.title = element_blank()) +
+  scale_color_manual(values = c("Train" = "blue", "Validation" = "orange", "Test" = "green"))
+
 
 ```
 
