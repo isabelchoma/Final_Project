@@ -25,18 +25,11 @@ if (!require("stats")) install.packages("stats"); library(stats)  # See note bel
 if (!require("car")) install.packages("car"); library(car)
 if (!require("kableExtra")) install.packages("kableExtra"); library(kableExtra)
 if (!require("ggcorrplot")) install.packages("ggcorrplot"); library(ggcorrplot)
+if (!require("tidyverse")) install.packages("tidyverse"); library(tidyverse)
+if (!require("caret")) install.packages("caret"); library(caret)
+if (!require("randomForest")) install.packages("randomForest"); library(randomForest)
+if (!require("e1071")) install.packages("e1071"); library(e1071)
 
-#Load necessary packages 
-library(knitr)
-library(ggplot2)
-library(dplyr)
-library(corrplot)
-library(tidyr)
-library(ggpubr)
-library(stats)
-library(car)
-library(kableExtra)
-library(ggcorrplot)
 ```
 
 By Isabel Choma, Isabella Reid, Kiley Meringer, and Sophia Hess
@@ -332,6 +325,91 @@ ggplot(hitters_data, aes(x = `Birth Year`, y = Logged_Salary)) +
 ```
 
 The scatterplot indicates a positive relationship between Birth Year and Logged Salary, where players born in later years tend to have higher salaries. The data points are closely aligned with the regression line, suggesting a stronger and more consistent relationship between these two variables compared to other variables like Hits or Games Played.
+
+## Machine Learning
+
+We are interested in predicting the salary outcome variable to forecast future outcomes based on learned patterns.
+
+```{r, include=FALSE}
+
+# Train/test split
+set.seed(123)
+split_idx <- createDataPartition(hitters_data$Logged_Salary, p = 0.8, list = FALSE)
+hitters_data2 <- hitters_data
+colnames(hitters_data2)[4]="Games_Played"
+colnames(hitters_data2)[6]="Birth_Year"
+train_data <- hitters_data2[split_idx, ]
+test_data <- hitters_data2[-split_idx, ]
+
+# Define formula
+formula <- Logged_Salary ~ Hits + Games_Played + Stint + Birth_Year
+
+### LINEAR REGRESSION
+lm_model <- lm(formula, data = train_data)
+summary(lm_model)
+
+# Predict
+lm_preds <- predict(lm_model, newdata = test_data)
+
+# Evaluate
+lm_results <- postResample(lm_preds, test_data$Logged_Salary)
+print("Linear Regression Results:")
+print(lm_results)
+
+```
+
+Our model had low explanatory power, with an R-squared of 0.08878462, which means that the model explains only 8.87% of the variance in Logged_Salary.
+
+RMSE = 1.08445407 (Root Mean Squared Error)
+The model’s predictions are off by about 1.08 log-salary units on average.
+Since Logged_Salary is a logarithmic scale, an error of 1.08 corresponds to a fairly large difference on the original salary scale (because exponentiating log differences increases spread).
+
+MAE = 1.30518158 (Mean Absolute Error)
+The average absolute prediction error is about 1.305 log-salary units, also large relative to log-salary range.
+
+So, the model is under-fitting because the linear model can't capture possible non-linear relationships, interactions, and unmeasured factors, so we are using the randomForest test instead, which handles non-linearity and interactions. 
+
+```{r, include=FALSE}
+
+### RANDOM FOREST
+rf_model <- randomForest(formula, data = train_data, ntree = 500, importance = TRUE)
+
+# Predict
+rf_preds <- predict(rf_model, newdata = test_data)
+
+# Evaluate
+rf_results <- postResample(rf_preds, test_data$Logged_Salary)
+print("Random Forest Results:")
+print(rf_results)
+
+# Feature importance
+varImpPlot(rf_model, main = "Random Forest Feature Importance")
+
+```
+
+R-squared improved to 0.1882189, meaning the model explains 18.82% of variance in Logged_Salary. 
+
+RMSE increased to 1.2542518, meaning he model’s predictions are now off by about 1.254 log-salary units on average
+
+MAE decreased to 1.0450920, meaning now the average absolute prediction error is about 1.045 log-salary units
+
+The model is still under-fitting. 
+
+We wanted to plot the model to see how it fits the data and how much it is under-fitting.
+
+```{r, echo=FALSE}
+
+#Plot representing underfitting or overfitting
+ggplot(data = NULL, aes(x = test_data$Logged_Salary, y = rf_preds)) +
+  geom_point(color = "blue") +
+  geom_abline(slope = 1, intercept = 0, color = "red", linetype = "dashed") +
+  labs(title = "Random Forest: Predicted vs Actual Logged Salary",
+       x = "Actual Logged Salary",
+       y = "Predicted Logged Salary")
+
+```
+
+We can see from this plot that the predictions are clustered far from the diagonal, so the model is under-fitting. 
 
 ## Conclusions 
 

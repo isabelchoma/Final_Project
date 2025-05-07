@@ -493,6 +493,49 @@ salaries. The data points are closely aligned with the regression line,
 suggesting a stronger and more consistent relationship between these two
 variables compared to other variables like Hits or Games Played.
 
+## Machine Learning
+
+We are interested in predicting the salary outcome variable to forecast
+future outcomes based on learned patterns.
+
+Our model had low explanatory power, with an R-squared of 0.08878462,
+which means that the model explains only 8.87% of the variance in
+Logged_Salary.
+
+RMSE = 1.08445407 (Root Mean Squared Error) The model’s predictions are
+off by about 1.08 log-salary units on average. Since Logged_Salary is a
+logarithmic scale, an error of 1.08 corresponds to a fairly large
+difference on the original salary scale (because exponentiating log
+differences increases spread).
+
+MAE = 1.30518158 (Mean Absolute Error) The average absolute prediction
+error is about 1.305 log-salary units, also large relative to log-salary
+range.
+
+So, the model is under-fitting because the linear model can’t capture
+possible non-linear relationships, interactions, and unmeasured factors,
+so we are using the randomForest test instead, which handles
+non-linearity and interactions.
+
+R-squared improved to 0.1882189, meaning the model explains 18.82% of
+variance in Logged_Salary.
+
+RMSE increased to 1.2542518, meaning he model’s predictions are now off
+by about 1.254 log-salary units on average
+
+MAE decreased to 1.0450920, meaning now the average absolute prediction
+error is about 1.045 log-salary units
+
+The model is still under-fitting.
+
+We wanted to plot the model to see how it fits the data and how much it
+is under-fitting.
+
+![](README_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
+
+We can see from this plot that the predictions are clustered far from
+the diagonal, so the model is under-fitting.
+
 ## Conclusions
 
 The goal of our analysis was to analyze if there was a correlation
