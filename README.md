@@ -632,7 +632,8 @@ salary.
 
 Youtube video link:
 
-Link to run the code in Kaggle:
+Colab Link:
+<https://colab.research.google.com/drive/1hX6l8H_OQYyWs576J1YHv_ALN1ycv54Z?authuser=2>
 
 Link to io page: <https://isabelchoma.github.io/Final_Project/>
 
