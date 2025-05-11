@@ -630,7 +630,9 @@ salary.
 
 ## More Information
 
-Youtube video link:
+Youtube video links:
+
+Tutorial link: <https://youtu.be/NEuI9wVOrjM>
 
 Colab Link:
 <https://colab.research.google.com/drive/1hX6l8H_OQYyWs576J1YHv_ALN1ycv54Z?authuser=2>
