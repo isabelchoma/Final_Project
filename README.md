@@ -633,6 +633,7 @@ salary.
 Youtube video links:
 
 Tutorial link: <https://youtu.be/NEuI9wVOrjM>
+Presentation link: <https://www.youtube.com/watch?v=layPdia4OFE>
 
 Colab Link:
 <https://colab.research.google.com/drive/1hX6l8H_OQYyWs576J1YHv_ALN1ycv54Z?authuser=2>
